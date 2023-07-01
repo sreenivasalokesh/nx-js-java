@@ -19,10 +19,16 @@ jobs:
       - run: npx nx affected -t docker-build #//run affected
 
       - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+        run: |
 
-      - name: Docker Push client
-        run: docker push slokesh/client-nx
+          if [[ "$(docker inspect --type=image slokesh/client-nx-1 2> /dev/null --format='present')" == "present" ]] ||  [[ "$(docker inspect --type=image slokesh/server-nx-1 2> /dev/null --format='present')" == "present" ]]; then
+             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+          fi          
 
-      - name: Docker Push server
-        run: docker push slokesh/server-nx
+          if [[ "$(docker inspect --type=image slokesh/client-nx-1 2> /dev/null --format='present')" == "present" ]]; then
+             docker push slokesh/client-nx
+          fi
+
+          if [[ "$(docker inspect --type=image slokesh/server-nx-1 2> /dev/null --format='present')" == "present" ]]; then
+             docker push slokesh/server-nx
+          fi
