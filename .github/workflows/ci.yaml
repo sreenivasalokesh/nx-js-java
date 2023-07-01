@@ -18,7 +18,7 @@ jobs:
       # - run: npx nx run-many -t docker-build -p client server    //run many
       - run: npx nx affected -t docker-build #//run affected
 
-      - name: Login to Docker Hub
+      - name: Login to Docker Hub and Push Images (if present)
         run: |
 
           if [ "$(docker inspect --type=image slokesh/client-nx 2> /dev/null --format='present')" == "present" ] ||  [ "$(docker inspect --type=image slokesh/server-nx 2> /dev/null --format='present')" == "present" ]
