@@ -17,13 +17,11 @@ jobs:
       - run: npm install
       - run: npx nx run-many -t docker-build -p client server
 
-      - name: Login to Docker Hub #make image
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push #push image
-        uses: docker/build-push-action@v4
-        with:
-          push: true
-          tags: slokesh/client-nx, slokesh/server-nx
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker Push client
+        run: docker push slokesh/client-nx
+
+      - name: Docker Push server
+        run: docker push slokesh/server-nx
