@@ -5,7 +5,7 @@ const ServerWelcome = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    console.log('test');
+    console.log('test 123');
     async function getServerData() {
       const response = await axios.get(
         `http://${process.env.NX_SERVER_URL}:${process.env.NX_SERVER_PORT}/welcome`
