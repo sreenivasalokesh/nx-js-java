@@ -16,7 +16,7 @@ jobs:
           node-version: 16
       - run: npm install
       # - run: npx nx run-many -t docker-build -p client server    //run many
-      - run: npx nx affected:docker-build --base= main~1 --head= main #//run affected
+      - run: nx affected -t docker-build --base=master~1 --head=head #//run affected
 
       - name: Login to Docker Hub and Push Images (if present)
         run: |
