@@ -11,13 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps: #code checkout. and prepare environment (node install)
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: 16
       - run: npm install
       # - run: npx nx run-many -t docker-build -p client server    //run many
       - run: git branch -a
-      - run: npx nx affected -t docker-build --base='remotes/origin/master~1' --head='HEAD' #//run affected
+      - run: npx nx affected -t docker-build --base=origin/main~1 --head=HEAD #//run affected
 
       - name: Login to Docker Hub and Push Images (if present)
         run: |
