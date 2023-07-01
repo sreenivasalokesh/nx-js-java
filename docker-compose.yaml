@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  client:
+    image: slokesh/client-nx
+    ports:
+      - '80:80'
+    environment:
+      NX_SERVER_URL: localhost
+      NX_SERVER_PORT: 3001
+
+  server:
+    image: slokesh/server-nx
+    ports:
+      - '3333:3333'

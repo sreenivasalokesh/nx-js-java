@@ -1,0 +1,11 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "dependencies": {
+    "tslib": "2.6.0"
+  },
+  "scripts": {
+    "start:prod": "serve -s build"
+  },
+  "main": "main.js"
+}
