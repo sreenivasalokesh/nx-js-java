@@ -21,14 +21,20 @@ jobs:
       - name: Login to Docker Hub
         run: |
 
-          if [[ "$(docker inspect --type=image slokesh/client-nx-1 2> /dev/null --format='present')" == "present" ]] ||  [[ "$(docker inspect --type=image slokesh/server-nx-1 2> /dev/null --format='present')" == "present" ]]; then
+          if [ "$(docker inspect --type=image slokesh/client-nx 2> /dev/null --format='present')" == "present" ] ||  [ "$(docker inspect --type=image slokesh/server-nx 2> /dev/null --format='present')" == "present" ]
+          then
              docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-          fi          
+             if [[ "$(docker inspect --type=image slokesh/client-nx 2> /dev/null --format='present')" == "present" ]]
+             then
+              echo "Uploading slokesh/client-nx"
+              docker push slokesh/client-nx
+             fi
 
-          if [[ "$(docker inspect --type=image slokesh/client-nx-1 2> /dev/null --format='present')" == "present" ]]; then
-             docker push slokesh/client-nx
-          fi
+             if [[ "$(docker inspect --type=image slokesh/server-nx 2> /dev/null --format='present')" == "present" ]]; then
+              echo "Uploading slokesh/slokesh/server-nx"
+              docker push slokesh/server-nx
+             fi
 
-          if [[ "$(docker inspect --type=image slokesh/server-nx-1 2> /dev/null --format='present')" == "present" ]]; then
-             docker push slokesh/server-nx
+          else   
+            echo "No images to upload"
           fi
