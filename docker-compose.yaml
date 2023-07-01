@@ -4,11 +4,23 @@ services:
     image: slokesh/client-nx
     ports:
       - '80:80'
+    expose:
+      - '80'
+    links:
+      - 'welcome-api'
     environment:
       NX_SERVER_URL: localhost
       NX_SERVER_PORT: 3001
+    networks:
+      - monorepo
 
-  server:
+  welcome-api:
     image: slokesh/server-nx
     ports:
       - '3333:3333'
+    expose:
+      - '3333'
+    networks:
+      - monorepo
+networks:
+  monorepo:
